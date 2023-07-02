@@ -1,0 +1,56 @@
+5) Sort Colors Leetcode Problem
+
+Approach:
+1.The code utilizes a modified version of the partitioning step in the QuickSort algorithm, known as the Dutch National Flag Algorithm.
+
+2.The algorithm maintains three pointers: low, mid, and high, representing the boundaries of three regions in the array:
+Elements before low (index < low) are all 0s.
+Elements between low and mid (low <= index <= mid) are all 1s.
+Elements between mid and high (mid <= index <= high) are unprocessed elements.
+Elements after high (index > high) are all 2s.
+The algorithm starts with low = 0, mid = 0, and high = nums.length - 1, representing the initial boundaries of the regions.
+
+3.The algorithm iterates while mid is less than or equal to high. This ensures that all elements are processed.
+
+4.Within the loop, we consider the value of the element at the mid index:
+
+5.If the element is 0, it should be moved to the region of 0s. We swap the element at mid with the element at low (which is guaranteed to be a 1). Then, we increment both mid and low to move the boundaries of the regions appropriately.
+If the element is 1, it is already in the correct region, so we simply increment mid to move to the next element.
+If the element is 2, it should be moved to the region of 2s. We swap the element at mid with the element at high (which is guaranteed to be a non-processed element). Then, we decrement high to move the boundary of the region of 2s.
+
+6.By performing swaps and updating the pointers, the algorithm moves all 0s to the left side of the array and all 2s to the right side, while the 1s remain in the middle.
+
+7.After the loop finishes, the array is sorted according to the desired order.
+
+Code:
+class Solution {
+    public void sortColors(int[] nums) {
+        // Without using the library sort function
+        // Dutch National Flag Algorithm
+
+        int low = 0, mid = 0, high = nums.length-1;
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                swap(nums, low, mid);
+                mid++;
+                low++;
+            }
+            else if (nums[mid] == 1) mid++;
+            else if (nums[mid] == 2) {
+                swap(nums, mid, high);
+                high--;
+            }
+        }
+    }
+
+    void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+}
+
+
+The intuition behind this approach is to maintain three regions while iterating through the array: one for 0s, one for 1s, and one for unprocessed elements. By appropriately swapping elements based on their values, the algorithm effectively partitions the array into the desired regions.
+
+The Dutch National Flag Algorithm guarantees that all elements are processed exactly once and that the final array will be sorted according to the desired order. This approach has a time complexity of O(n) since each element is processed once, where n is the size of the array. It operates in-place without using any additional data structures, resulting in a space complexity of O(1).

@@ -1,0 +1,44 @@
+6) Remove Duplicates from Sorted Array Leetcode Problem
+
+Approach:
+1.The code initializes flag to 1, which represents the current position for inserting a unique element in the modified array. It starts from index 1 because the first element is always considered unique.
+
+2.The code then iterates through the array from index 0 to n-1, where n is the length of the array.
+
+3.Within the loop, it compares each element nums[i] with its adjacent element nums[i+1].
+
+4.If the current element nums[i] is less than the next element nums[i+1], it means a unique element is found. In this case, we copy the next element nums[i+1] to the position represented by flag in the modified array and increment flag to point to the next available position.
+
+5.By copying the next unique element to the correct position in the modified array, we ensure that the modified array contains only unique elements.
+
+6.The loop continues until the second-to-last element (n-1) to avoid accessing an out-of-bounds index.
+
+7.Finally, the code returns the value of flag, which represents the length of the modified array with unique elements.
+
+
+Code:
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int flag = 1, n = nums.length;
+
+        for (int i=0; i<n-1; i++) {
+            if (nums[i] < nums[i+1]) {
+                nums[flag] = nums[i+1];
+                flag++;
+            }
+        }
+
+        return flag;
+    }
+}
+
+
+The intuition behind this approach is to utilize the fact that the given array is already sorted. By iterating through the array and comparing adjacent elements, we can identify the unique elements and place them in their correct positions in the modified array. The flag variable keeps track of the current position for inserting unique elements.
+
+Since the array is sorted, duplicates are guaranteed to be adjacent. By comparing adjacent elements, we can identify when a new unique element is encountered and copy it to the modified array.
+
+This approach achieves the removal of duplicates in-place, without using any extra space. The time complexity of this approach is O(n), where n is the length of the input array, as we iterate through the array once. The space complexity is O(1) since the removal is done in-place without using additional data structures.
+
+
+
+

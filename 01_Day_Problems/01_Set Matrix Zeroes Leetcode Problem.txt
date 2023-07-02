@@ -1,0 +1,41 @@
+1) Set Matrix Zeroes Leetcode Problem
+
+Discuss step-by-step: 
+1.The code starts by initializing two arrays, row and col, with the same number of elements as the number of rows and columns in the matrix. The purpose of these arrays is to keep track of which rows and columns contain zeroes.
+
+2.The first iteration through the matrix checks each element. If an element at position matrix[i][j] is zero, the corresponding row[i] and col[j] elements in the arrays are updated to a value different from zero (typically -1) to indicate that the row and column need to be set to zero later.
+
+3.After the first iteration, the row and col arrays have been updated to mark the rows and columns that contain at least one zero element.
+
+4.The second iteration through the matrix checks each element again. For each element at position matrix[i][j], if either the row[i] or col[j] value is the marked value (e.g., -1), it means that the current element belongs to a row or column that had a zero element. In that case, the current element is explicitly set to zero.
+
+5.By the end of the second iteration, the matrix would have been modified in place, setting all the required rows and columns to zero based on the presence of a zero element.
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        int[] row = new int[m];
+        int[] col = new int[n];
+
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (matrix[i][j] == 0) {
+                    row[i] = -1; col[j] = -1;
+                }
+            }
+        }
+
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (row[i] == -1 || col[j] == -1) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+}
+
+Summary: The code first identifies the rows and columns that contain at least one zero element by marking them in separate arrays. Then, in the second iteration, it sets the elements in the matrix to zero for the rows and columns that were marked in the previous step.
+
+The intuition behind this approach is to identify the rows and columns that need to be set to zero without directly modifying the matrix in the first iteration. This allows us to avoid modifying the matrix while traversing it and ensure that we capture all the necessary rows and columns before performing the actual modification in the second iteration.
+

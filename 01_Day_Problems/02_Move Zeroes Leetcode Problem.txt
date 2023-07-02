@@ -1,0 +1,39 @@
+2) Move Zeroes Leetcode Problem
+
+Approach:
+ 
+1.The code starts by initializing two variables: n, which stores the length of the nums array, and flag, which will be used as an index to track the position where non-zero elements should be placed.
+
+2.The code then goes through a loop from index 0 to n-1 to iterate over each element in the nums array.
+
+3.For each element nums[i], if it is not equal to zero (i.e., a non-zero element), we move it to the position indicated by the flag index. This is done by assigning nums[flag] = nums[i]. After assigning the value, we increment the flag index by one to indicate that the next non-zero element should be placed at the next position.
+
+4.If the current element is zero, we continue to the next iteration of the loop without modifying the flag index or the value at the current position.
+
+5.After the first loop completes, all the non-zero elements have been placed at the beginning of the array, while maintaining their relative order. The flag index now points to the position where the next non-zero element should be placed.
+
+6.In the second loop, starting from the flag index, we iterate through the remaining positions of the nums array and set each element to zero. This ensures that all the elements from flag onwards are set to zero, effectively moving all the zeros to the end of the array.
+
+Code:
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length, flag = 0;
+
+        for (int i=0; i<n; i++) {
+            if (nums[i] != 0) {
+                nums[flag] = nums[i];
+                flag++;
+            } else continue;
+        }
+
+        for (int i=flag; i<n; i++) {
+            nums[i] = 0;
+        }
+    }
+}
+
+The intuition behind this approach is to maintain two pointers, i and flag, while traversing the array. The i pointer scans through each element of the array, and if it encounters a non-zero element, it is placed at the position indicated by the flag pointer. The flag pointer keeps track of the correct position for the next non-zero element. By the end of the first loop, all non-zero elements will be placed correctly, and the flag index will point to the next available position.
+
+In the second loop, we fill the remaining positions of the array from flag onwards with zeros, ensuring that all the zeros are moved to the end while maintaining the relative order of non-zero elements.
+
+This approach has a time complexity of O(n) since it iterates through the nums array twice, and a space complexity of O(1) as it does not use any additional data structures proportional to the input size.

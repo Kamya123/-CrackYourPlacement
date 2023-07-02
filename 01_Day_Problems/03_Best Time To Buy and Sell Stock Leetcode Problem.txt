@@ -1,0 +1,117 @@
+3) Best Time To Buy and Sell Stock Prices
+
+Approach:
+The given code provides multiple implementations for the maxProfit function, which aims to find the maximum profit that can be obtained from buying and selling stocks represented by an array of prices.
+
+Approach 1: Brute Force
+
+The code includes a commented-out section that presents a brute force approach with a time complexity of O(n^2). It uses nested loops to compare each pair of prices and calculates the profit. The maximum profit found is stored in the maxProfit variable. However, this approach is inefficient for larger arrays due to its quadratic time complexity.
+
+Approach 2: Optimized using Kadane's Algorithm
+
+The code then presents an optimized approach using Kadane's algorithm, which provides a more efficient solution with a time complexity of O(n). This algorithm is typically used to find the maximum subarray sum, but it can also be adapted to find the maximum profit in this context.
+
+The algorithm maintains two variables, curr_profit and maxProfit. It iterates through the array of prices starting from the second element. For each element, it calculates the difference between the current price and the previous price (i.e., diff = prices[i] - prices[i-1]).
+
+It then updates curr_profit by adding diff. If curr_profit becomes negative, it means that buying at the previous price would result in a greater profit. Hence, curr_profit is reset to zero.
+
+The maximum profit is updated by comparing maxProfit with curr_profit and selecting the larger value. Finally, the maximum profit is returned.
+
+Approach 3: Optimized with a single loop
+
+The final implementation refines the previous approach by using a single loop. It initializes maxProfit to zero and minCost to the maximum possible integer value.
+
+It iterates through the prices and updates minCost if the current price is less than the current minimum cost. Then, it calculates the currentProfit by subtracting minCost from the current price.
+
+The maximum profit is updated by comparing maxProfit with currentProfit and selecting the larger value.
+
+Finally, the maximum profit is returned.
+
+Both the second and third approaches are efficient and provide the same result. The third approach is a more concise implementation that achieves the same goal as the second approach while using a single loop.
+
+
+// class Solution {
+//     public int maxProfit(int[] prices) {
+//         //Brute Force approach of n2
+//         int maxProfit = 0, n = prices.length;
+
+//         // for (int i=0; i<n-1; i++) {
+//         //     for (int j=i+1; j<n; j++) {
+//         //         int profit = prices[j] - prices[i];
+//         //         maxProfit = Math.max(profit, maxProfit);
+//         //     }
+//         // }
+
+
+//         //Optimize Approach using Kadane's Algorithm
+//         int curr_profit = 0;
+
+//         for (int i=1; i<n; i++) {
+//             int diff = prices[i] - prices[i-1];
+//             curr_profit += diff;
+//             maxProfit = Math.max(maxProfit, curr_profit);
+//             if (curr_profit < 0) curr_profit = 0;
+//         }
+
+
+//         //Here in the following solution, we are keeping the track of the min_price, because we can only have the maximum profit, if we have buy it at the minimum price
+
+//         // int min_price = 10001;
+
+//         // for (int i=0; i<n; i++) {
+//         //     int curr_price = prices[i];
+//         //     min_price = Math.min(min_price, curr_price);
+//         //     int profit = curr_price - min_price;
+//         //     maxProfit = Math.max(profit, maxProfit); 
+//         // }
+
+//         return maxProfit;
+//     }
+// }
+
+
+// class Solution {
+//     public int maxProfit(int[] prices) {
+//         int minBuy = prices[0], maxProfit = 0;
+//         for (int current : prices) {
+//             minBuy = Math.min(minBuy, current);
+//             maxProfit = Math.max(maxProfit, current - minBuy);
+//         }
+//         return maxProfit;
+//     }
+// }
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+
+//      inilially, maxProfit iss 0
+        int maxProfit = 0;
+
+//      minCost is Max value
+        int minCost = Integer.MAX_VALUE;
+
+//      Iterate the prices
+        for (int price : prices) {
+
+//          Update minCost if current price is less.
+            minCost = Math.min(price, minCost);
+
+//          Calculate cuurent profit.
+            int currentProfit = price - minCost;
+
+//          Update maxProfit if current profit is more.
+            maxProfit = Math.max(currentProfit, maxProfit);
+        }
+
+//      Finally, return the maxProfit.
+        return maxProfit;        
+    }
+}
+
+
+The key intuition in this approach is that the maximum profit is obtained by buying the stock at the lowest price and selling it at the highest price. By keeping track of the minimum cost and calculating the potential profit at each price, we can determine the maximum profit achievable.
+
+The single loop optimization eliminates the need for a separate loop to calculate the differences in prices. It achieves the same result by updating minCost and maxProfit as we iterate through the prices array.
+
+Overall, this approach offers an efficient solution with a time complexity of O(n) and utilizes the intuition of buying at the minimum price and selling at the maximum price to maximize the profit.

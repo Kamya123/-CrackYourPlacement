@@ -1,0 +1,43 @@
+4) Find The Duplicate Number Leetcode Problem
+
+Approach:
+1.The code utilizes the cycle sort algorithm, which is an in-place sorting algorithm that aims to place each element of the array in its correct position.
+
+2.The idea behind the algorithm is to iterate through the array and, for each element at index i, check if it is in the correct position (i.e., nums[i] == i+1). If it is, we increment i and move on to the next element. Otherwise, we perform a swap to place the element in its correct position.
+
+3.The swap operation is performed by the swap helper function, which exchanges the elements at indices i and nums[i]-1 in the nums array.
+
+4.Within the main loop, we check if the current element nums[i] is equal to its correct value i+1. If it is, we increment i and continue to the next iteration. This handles the case when the element is already in the correct position.
+
+5.If the current element is not in the correct position, we check if it is equal to the element at the position it should be (nums[nums[i]-1]). If they are equal, it means we have found a duplicate, and we can return the duplicate number.
+
+6.If the current element is not equal to the element at the correct position, we perform a swap to place the current element in its correct position. This ensures that each element is eventually moved to its correct position or reveals a duplicate.
+
+7.The main loop continues until we have processed all the elements in the array. Once the loop completes without finding a duplicate, we return -1 to indicate that no duplicate was found.
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //Cycle sort, because here the range is between [1,n]
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] != i+1)
+                if (nums[i] != nums[nums[i]-1])
+                    swap(nums, i, nums[i]-1);
+                else return nums[i]; 
+            else i++;
+        }
+
+        return -1;
+    }
+
+    void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+
+
+The intuition behind this approach is that by iterating through the array and performing swaps, we aim to move each element to its correct position. If a duplicate element exists, the swapping process will eventually lead to encountering the same element at two different indices, indicating the presence of a duplicate.
+
+This approach has a time complexity of O(n) since we iterate through the array once, and a space complexity of O(1) since the sorting is done in-place without using any additional data structures.
