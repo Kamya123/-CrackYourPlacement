@@ -1,0 +1,43 @@
+02_Two Sum II - Input Array Is Sorted
+
+Approach:
+1. Initialization:
+-The solution initializes two pointers, left and right, to the start and end of the array, respectively.
+-The left pointer starts from index 0, representing the smallest element in the array, while the right pointer starts from index numbers.length-1, representing the largest element in the array.
+
+2. Two-Pointer Iteration:
+-The solution enters a while loop that continues until the left and right pointers meet or cross each other.
+-In each iteration, the solution calculates the sum of the elements at the left and right indices: sum = numbers[left] + numbers[right].
+-If the sum equals the target, the solution has found the desired pair. It returns an array containing the indices of the two numbers, adjusted by adding 1 to each index (return new int[]{left+1, right+1}).
+-If the sum is less than the target, it means the sum needs to be increased. In this case, the left pointer is incremented (left++), as increasing the smaller number can potentially lead to a larger sum.
+-If the sum is greater than the target, it means the sum needs to be decreased. In this case, the right pointer is decremented (right--), as decreasing the larger number can potentially lead to a smaller sum.
+
+3. Termination:
+-If the while loop finishes without finding a valid pair, it means no such pair exists in the array. In this case, the solution returns new int[]{-1,-1} to indicate the absence of a valid pair.
+
+Code:
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int left = 0, right = numbers.length-1;
+
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
+            if (sum == target)
+                return new int[]{left+1, right+1};
+            else if (sum < target) left++;
+            else right--;
+        }
+
+        return new int[]{-1,-1};
+    }
+}
+
+
+The intuition behind this approach is as follows:
+Since the array is sorted, by comparing the sum of the numbers at the left and right pointers with the target, we can adjust the pointers intelligently to converge toward the target sum.
+
+-If the sum is smaller than the target, incrementing the left pointer ensures that we consider a larger number in the next iteration, potentially leading to a larger sum.
+-If the sum is greater than the target, decrementing the right pointer ensures that we consider a smaller number in the next iteration, potentially leading to a smaller sum.
+-By iteratively adjusting the pointers based on the comparison with the target, we effectively narrow down the search space until we find the pair that adds up to the target sum or determine that no such pair exists.
+
+The two-pointer approach provides an efficient solution with a time complexity of O(n), where n is the length of the array. Since we traverse the array only once from both ends, the algorithm does not require nested loops or additional data structures.

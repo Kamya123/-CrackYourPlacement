@@ -1,0 +1,58 @@
+01_Two Sum Leetcode Problem
+
+Approach:
+1.Brute Force Approach:
+The brute force approach involves using two nested loops to iterate through all possible pairs of numbers in the array and checking if their sum equals the target. The code snippet for the brute force approach is commented out in the given code.
+
+The outer loop iterates from i = 0 to n - 1, where n is the length of the array. The inner loop iterates from j = i + 1 to n. For each pair of numbers nums[i] and nums[j], the code checks if their sum equals the target. If it does, the indices i and j are assigned to res[0] and res[1] respectively.
+
+The brute force approach has a time complexity of O(n^2), where n is the length of the array. This is because, in the worst case, each element of the array needs to be compared with every other element.
+
+2.Optimal Approach using HashMap:
+The optimal approach utilizes a HashMap to improve the time complexity of the solution. It iterates through the array once, storing each number and its index in the HashMap. For each number nums[i], it calculates the complement target - nums[i] and checks if the complement exists in the HashMap. If it does, it means there is a pair of numbers that add up to the target.
+
+The HashMap stores the number as the key and its index as the value. By storing the numbers and their indices, we can easily retrieve the index of the complement when it is found. The indices of the two numbers are then assigned to res[0] and res[1].
+
+This approach has a time complexity of O(n) since the HashMap allows constant time retrieval and insertion operations on average. The space complexity is also O(n) because, in the worst case, all the numbers in the array need to be stored in the HashMap.
+
+
+Code:
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] res = new int[2];
+        int n = nums.length;
+
+        //Brute Force Approch is of n2
+        // for (int i=0; i<n-1; i++) {
+        //     for (int j=i+1; j<n; j++) {
+        //         if (nums[i] + nums[j] == target) {
+        //             res[0] = i;
+        //             res[1] = j;
+        //         }
+        //     }
+        // }
+
+        //Optimal Approach using HashMap
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i=0; i<n; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                res[0] = map.get(complement);
+                res[1] = i;
+                // return new int[]{map.get(complement), i};
+            }
+            map.put(nums[i], i);
+        }
+        
+        return res;
+    }
+}
+
+
+Intution:
+The intuition behind the optimal approach using a HashMap is to leverage the HashMap's ability to provide fast lookup operations to solve the problem more efficiently.
+
+The approach takes advantage of the fact that we need to find a pair of numbers whose sum equals the target value. By iterating through the array and storing each number along with its index in the HashMap, we can quickly check if the complement of the current number exists in the HashMap.
+
+The key intuition behind using a HashMap is that it allows constant-time lookup operations. This means that, on average, the time required to find an element in the HashMap does not depend on the size of the data set. In other words, even for large arrays, the time complexity for searching in the HashMap remains constant. This property makes the HashMap approach much more efficient than the brute force approach, which has a time complexity of O(n^2).
