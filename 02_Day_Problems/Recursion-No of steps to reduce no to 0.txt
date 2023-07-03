@@ -1,0 +1,43 @@
+Recursion-No of steps to reduce no to zeroes
+
+Approach:
+1st Approach Using while loop,
+ - initialize steps = 0
+ - run a loop till num > 0
+ - if (num is even) then
+	do num = num / 2
+	steps + 1
+ - if (num is odd) then
+	do num = num - 1
+	steps + 1
+ - return steps;
+
+2nd Approach Using recursion
+ - initialize steps to 0
+ - update steps using a recursion call
+ - steps = usingRecursion(num, 0)
+ - In Recursion
+	- base case if (num == 0) return steps
+	- if (num % 2 != 0) return (num - 1, steps + 1)
+	- return (num / 2, steps+1)
+
+Code:
+class Solution {
+    public int numberOfSteps(int num) {
+        int count = usingRecursion(num, 0);
+
+        return count;
+    }
+
+    int usingRecursion(int num, int count) {
+        if (num == 0) 
+            return count;
+        
+        if (num % 2 != 0) {
+            return usingRecursion(num -= 1, ++count);
+        }
+        return usingRecursion(num / 2, ++count);
+    }
+}
+
+Intution behind the using of recursion is simply, because here we are doing same thing again and again using while loop, so to divide the problems into subproblems and solve it accordingly.
