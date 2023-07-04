@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class SumOfNNaturalNo {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+
+        System.out.println("The sum of first " + n + " natural numbers = " + sumOfNNaturalNo(n,0));
+    }
+
+    static int sumOfNNaturalNo(int n, int sum) {
+        if (n == 0)
+            return sum;
+
+        return sumOfNNaturalNo(n-1, sum + n);
+    }
+}
