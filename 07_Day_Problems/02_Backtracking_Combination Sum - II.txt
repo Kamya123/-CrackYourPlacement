@@ -1,0 +1,56 @@
+Combination Sum - II
+
+//Optiised Approach:
+
+class Solution {
+    void helper(int idx, int target, List<List<Integer>> ans, List<Integer> ls, int[] arr) {
+        if (target == 0) {
+            ans.add(new ArrayList<>(ls));
+            return;
+        }
+
+        for (int i=idx; i<arr.length; i++) {
+            if (i > idx && arr[i] == arr[i-1]) continue; 
+            if (arr[i] > target) break;
+            
+            ls.add(arr[i]);
+            helper(i+1, target-arr[i], ans, ls, arr);
+            ls.remove(ls.size()-1);
+        }
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> list = new ArrayList<>();
+        helper(0, target, list, new ArrayList<>(), candidates);
+        return list;
+    }
+}
+
+
+//Brute Force Approach:
+
+// class Solution {
+//     void helper(int idx, int target, Set<List<Integer>> ans, List<Integer> ls, int[] arr) {
+//         if (idx == arr.length) {
+//             if (target == 0) {
+//                 ans.add(new ArrayList<>(ls));
+//             }
+//             return;
+//         }
+
+//         if (target >= arr[idx]) {
+//             ls.add(arr[idx]);
+//             helper(idx+1, target-arr[idx], ans, ls, arr);
+//             ls.remove(ls.size()-1);
+//         }
+//         helper(idx+1, target, ans, ls, arr);
+//     }
+
+//     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+//         Arrays.sort(candidates);
+//         Set<List<Integer>> list = new HashSet<>();
+//         helper(0, target, list, new ArrayList<>(), candidates);
+//         return new ArrayList<>(list);
+//     }
+// }

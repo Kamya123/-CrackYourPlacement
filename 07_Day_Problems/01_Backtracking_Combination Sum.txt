@@ -1,0 +1,25 @@
+Combination Sum
+
+class Solution {
+    void result(int[] cnd, int idx, int trgt, List<Integer> ls, List<List<Integer>> res) {
+        //base case
+        if (idx == cnd.length) {
+            if (trgt == 0) 
+                res.add(new ArrayList<>(ls));
+            return;
+        }
+        //if trgt is >=
+        if (trgt >= cnd[idx]) {
+            ls.add(cnd[idx]);
+            result(cnd, idx, trgt-cnd[idx], ls, res);
+            ls.remove(ls.size()-1);
+        } 
+        result(cnd, idx+1, trgt, ls, res);
+    }
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        result(candidates, 0, target, new ArrayList<>(), res);
+        return res;
+    }
+}
