@@ -1,0 +1,75 @@
+//01-Recursion_Permutations(All)
+
+//Optimal Approach
+
+class Solution {
+    void swap(int[] arr, int a, int b) {
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+
+    void helper(int idx, int[] arr, List<List<Integer>> ans) {
+        if (idx == arr.length) {
+            List<Integer> ls = new ArrayList<>();
+            for (int i=0; i<arr.length; i++) {
+                ls.add(arr[i]);
+            }
+            ans.add(new ArrayList<>(ls));
+            return;
+        }
+
+        for (int i=idx; i<arr.length; i++) {
+            swap(arr, idx, i);
+            helper(idx+1, arr, ans);
+            swap(arr, idx, i);
+        }
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(0, nums, ans);
+        return ans;
+    }
+}
+
+The intuition behind the swapping approach is that at a particular index, we are having all the elements and we can get all the required elements at a particular index only by swapping. And it is required to be done again and again. So, we have used swapping in recursion.
+
+Time Complexity: n! Because of the generation of the n! sequence and we are using a loop for each element.
+So, TC = n!*n
+Space Complexity: no extra space
+So, SC =  O(1)
+
+
+//Brute Force Approach
+
+// class Solution {
+//     void helper(int[] arr, List<Integer> ls, List<List<Integer>> ans, boolean[] freq) {
+//         if (ls.size() == arr.length) {
+//             ans.add(new ArrayList<>(ls));
+//             return;
+//         }
+
+//         for (int i=0; i<arr.length; i++) {
+//             if (!freq[i]) {
+//                 freq[i] = true;
+//                 ls.add(arr[i]);
+//                 helper(arr, ls, ans, freq);
+//                 ls.remove(ls.size()-1);
+//                 freq[i] = false;
+//             }
+//         }
+//     }
+
+//     public List<List<Integer>> permute(int[] nums) {
+//         boolean[] freq = new boolean[nums.length];
+//         List<List<Integer>> ans = new ArrayList<>();
+
+//         for(int i=0; i<nums.length; i++) {
+//             freq[i] = false;
+//         }
+
+//         helper(nums, new ArrayList<>(), ans, freq);
+//         return ans;
+//     }
+// }
